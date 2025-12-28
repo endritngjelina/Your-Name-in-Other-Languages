@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Name Translator - Your Name Across Cultures</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        .search-section {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 18px 24px;
+            font-size: 1.1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: #fafbfc;
+        }
+
+        .name-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .translate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .translate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .translate-btn:active {
+            transform: translateY(0);
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #e1e5e9;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .language-card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .language-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .language-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .language-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 20px;
+        }
+
+        .language-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .language-script {
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .flag {
+            font-size: 1.8rem;
+            margin-left: auto;
+        }
+
+        .translated-name {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #667eea;
+            margin: 15px 0;
+            font-family: 'Noto Sans', sans-serif;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+
+        .phonetic {
+            background: #f8f9ff;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            color: #555;
+            border-left: 3px solid #667eea;
+            margin: 15px 0;
+        }
+
+        .cultural-note {
+            font-size: 0.85rem;
+            color: #777;
+            line-height: 1.5;
+            font-style: italic;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border: none;
+            border-radius: 6px;
+            padding: 6px 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            color: #667eea;
+        }
+
+        .copy-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .search-suggestions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .suggestion-btn {
+            padding: 8px 16px;
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .difficulty-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-easy { background: #d4edda; color: #155724; }
+        .difficulty-medium { background: #fff3cd; color: #856404; }
+        .difficulty-hard { background: #f8d7da; color: #721c24; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes cardEntry {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .language-card {
+            animation: cardEntry 0.6s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .logo { font-size: 2.2rem; }
+            .search-section { padding: 25px; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .filter-controls { justify-content: center; }
+            .stats { gap: 20px; }
+            .results-grid { grid-template-columns: 1fr; gap: 16px; }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🌍 GlobalName</div>
+            <div class="subtitle">Discover how your name is written and pronounced across cultures worldwide</div>
+        </div>
+
+        <div class="search-section">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    class="name-input" 
+                    placeholder="Enter your name (e.g., Maria, David, Akiko...)"
+                    id="nameInput"
+                    autocomplete="off"
+                >
+            </div>
+            
+            <div class="controls">
+                <button class="translate-btn" onclick="translateName()">
+                    🔍 Translate My Name
+                </button>
+                
+                <div class="filter-controls">
+                    <button class="filter-btn active" data-filter="all">All Languages</button>
+                    <button class="filter-btn" data-filter="common">Popular</button>
+                    <button class="filter-btn" data-filter="scripts">Unique Scripts</button>
+                </div>
+            </div>
+
+            <div class="search-suggestions">
+                <button class="suggestion-btn" onclick="setName('Alexander')">Alexander</button>
+                <button class="suggestion-btn" onclick="setName('Maria')">Maria</button>
+                <button class="suggestion-btn" onclick="setName('David')">David</button>
+                <button class="suggestion-btn" onclick="setName('Yuki')">Yuki</button>
+                <button class="suggestion-btn" onclick="setName('Ahmed')">Ahmed</button>
+            </div>
+
+            <div class="stats" id="stats" style="display: none;">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalLanguages">0</span>
+                    <div class="stat-label">Languages</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="uniqueScripts">0</span>
+                    <div class="stat-label">Writing Systems</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="continents">0</span>
+                    <div class="stat-label">Continents</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <div class="toast" id="toast">Copied to clipboard!</div>
+
+    <script>
+        // Comprehensive language database with cultural variants and phonetics
+        const languageDatabase = {
+            // European Languages
+            'Spanish': {
+                script: 'Latin',
+                flag: '🇪🇸',
+                difficulty: 'easy',
+                continent: 'Europe',
+                category: 'common',
+                transforms: {
+                    'Maria': { name: 'María', phonetic: '/ma-REE-ah/', note: 'Most popular female name in Spanish-speaking countries' },
+                    'David': { name: 'David', phonetic: '/dah-VEED/', note: 'Pronounced with emphasis on second syllable' },
+                    'Alexander': { name: 'Alejandro', phonetic: '/ah-leh-HAHN-dro/', note: 'Common shortened to "Alex" or "Ale"' },
+                    'Yuki': { name: 'Yuki', phonetic: '/YOO-kee/', note: 'Adopted as-is, meaning "snow" in Japanese origin' },
+                    'Ahmed': { name: 'Ahmed', phonetic: '/ah-MED/', note: 'Maintained from Arabic origin' }
+                }
+            },
+            'French': {
+                script: 'Latin',
+                flag: '🇫🇷',
+                difficulty: 'medium',
+                continent: 'Europe',
+                category: 'common',
+                transforms: {
+                    'Maria': { name: 'Marie', phonetic: '/ma-REE/', note: 'Classic French feminine name, often combined' },
+                    'David': { name: 'David', phonetic: '/da-VEED/', note: 'Silent final consonant in French pronunciation' },
+                    'Alexander': { name: 'Alexandre', phonetic: '/ah-lek-SAHN-druh/', note: 'No final "r" sound in French' },
+                    'Yuki': { name: 'Yuki', phonetic: '/yoo-KEE/', note: 'Exotic name, pronounced with French accent' },
+                    'Ahmed': { name: 'Ahmed', phonetic: '/ah-MED/', note: 'Common in French North African communities' }
+                }
+            },
+            'German': {
+                script: 'Latin',
+                flag: '🇩🇪',
+                difficulty: 'medium',
+                continent: 'Europe',
+                category: 'common',
+                transforms: {
+                    'Maria': { name: 'Maria', phonetic: '/ma-REE-ah/', note: 'Traditional German name, often combined with other names' },
+                    'David': { name: 'David', phonetic: '/DAH-veet/', note: 'Pronounced with German "v" sound (like English "f")' },
+                    'Alexander': { name: 'Alexander', phonetic: '/ah-lek-SAHN-der/', note: 'Strong pronunciation with rolled "r"' },
+                    'Yuki': { name: 'Yuki', phonetic: '/YOO-kee/', note: 'Uncommon but accepted international name' },
+                    'Ahmed': { name: 'Ahmed', phonetic: '/AH-med/', note: 'Common in German Turkish communities' }
+                }
+            },
+            'Italian': {
+                script: 'Latin',
+                flag: '🇮🇹',
+                difficulty: 'easy',
+                continent: 'Europe',
+                category: 'common',
+                transforms: {
+                    'Maria': { name: 'Maria', phonetic: '/ma-REE-ah/', note: 'Extremely popular, often paired with other names' },
+                    'David': { name: 'Davide', phonetic: '/da-VEE-deh/', note: 'Italian form adds final "e"' },
+                    'Alexander': { name: 'Alessandro', phonetic: '/ah-les-SAHN-dro/', note: 'Classic Italian variant, nickname "Ale"' },
+                    'Yuki': { name: 'Yuki', phonetic: '/YOO-kee/', note: 'Maintained as international name' },
+                    'Ahmed': { name: 'Ahmed', phonetic: '/AH-med/', note: 'Used in Italian Muslim communities' }
+                }
+            },
+            'Portuguese': {
+                script: 'Latin',
+                flag: '🇵🇹',
+                difficulty: 'medium',
+                continent: 'Europe',
+                category: 'common',
+                transforms: {
+                    'Maria': { name: 'Maria', phonetic: '/ma-REE-uh/', note: 'National favorite, often doubled as "Maria Maria"' },
+                    'David': { name: 'David', phonetic: '/da-VEED/', note: 'Stress on second syllable in Portuguese' },
+                    'Alexander': { name: 'Alexandre', phonetic: '/ah-le-SHAHN-dreh/', note: 'Portuguese pronunciation with soft "x"' },
+                    'Yuki': { name: 'Yuki', phonetic: '/YOO-kee/', note: 'Popular in Brazilian Japanese community' },
+                    'Ahmed': { name: 'Ahmed', phonetic: '/ah-MED/', note: 'Less common but recognized' }
+                }
+            },
+            'Russian': {
+                script: 'Cyrillic',
+                flag: '🇷🇺',
+                difficulty: 'hard',
+                continent: 'Europe',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: 'Мария', phonetic: '/ma-REE-ya/', note: 'Classical Russian name with soft ending' },
+                    'David': { name: 'Давид', phonetic: '/da-VEED/', note: 'Biblical name, alternative spelling Давыд' },
+                    'Alexander': { name: 'Александр', phonetic: '/ah-lek-SAHN-dr/', note: 'Extremely popular, nickname "Саша" (Sasha)' },
+                    'Yuki': { name: 'Юки', phonetic: '/YOO-kee/', note: 'Transliterated Japanese name' },
+                    'Ahmed': { name: 'Ахмед', phonetic: '/ahk-MED/', note: 'Common in Russian Muslim regions' }
+                }
+            },
+            'Greek': {
+                script: 'Greek',
+                flag: '🇬🇷',
+                difficulty: 'hard',
+                continent: 'Europe',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: 'Μαρία', phonetic: '/ma-REE-ah/', note: 'Traditional Greek name, associated with Virgin Mary' },
+                    'David': { name: 'Δαβίδ', phonetic: '/dha-VEED/', note: 'Biblical name with Greek pronunciation' },
+                    'Alexander': { name: 'Αλέξανδρος', phonetic: '/ah-LEK-sahn-dhros/', note: 'Ancient Greek origin, Alexander the Great' },
+                    'Yuki': { name: 'Γιούκι', phonetic: '/YOO-kee/', note: 'Phonetic adaptation of Japanese name' },
+                    'Ahmed': { name: 'Αχμέτ', phonetic: '/ahkh-MET/', note: 'Turkish variant common in Greek communities' }
+                }
+            },
+
+            // Asian Languages
+            'Chinese (Mandarin)': {
+                script: 'Chinese Characters',
+                flag: '🇨🇳',
+                difficulty: 'hard',
+                continent: 'Asia',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: '玛丽亚', phonetic: '/mǎ lì yà/', note: 'Phonetic approximation, literally "agate beautiful elegant"' },
+                    'David': { name: '大卫', phonetic: '/dà wèi/', note: 'Meaning "great defender", biblical adaptation' },
+                    'Alexander': { name: '亚历山大', phonetic: '/yà lì shān dà/', note: 'Historical name, means "sub-through-mountain-great"' },
+                    'Yuki': { name: '雪', phonetic: '/xuě/', note: 'Direct translation meaning "snow"' },
+                    'Ahmed': { name: '艾哈迈德', phonetic: '/ài hā mài dé/', note: 'Phonetic transcription for Muslim names' }
+                }
+            },
+            'Japanese': {
+                script: 'Hiragana/Katakana',
+                flag: '🇯🇵',
+                difficulty: 'hard',
+                continent: 'Asia',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: 'マリア', phonetic: '/ma-ri-a/', note: 'Katakana for foreign names, popular in Japan' },
+                    'David': { name: 'デービッド', phonetic: '/dē-bi-ddo/', note: 'Katakana approximation of English pronunciation' },
+                    'Alexander': { name: 'アレキサンダー', phonetic: '/a-re-ki-san-dā/', note: 'Long katakana form for complex foreign names' },
+                    'Yuki': { name: '雪 / ゆき', phonetic: '/yu-ki/', note: 'Native Japanese name meaning "snow" or "happiness"' },
+                    'Ahmed': { name: 'アハメド', phonetic: '/a-ha-me-do/', note: 'Katakana phonetic adaptation' }
+                }
+            },
+            'Korean': {
+                script: 'Hangul',
+                flag: '🇰🇷',
+                difficulty: 'hard',
+                continent: 'Asia',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: '마리아', phonetic: '/ma-ri-a/', note: 'Christian name, popular in Korean churches' },
+                    'David': { name: '데이비드', phonetic: '/de-i-bi-deu/', note: 'English pronunciation adapted to Korean sounds' },
+                    'Alexander': { name: '알렉산더', phonetic: '/al-lek-san-deo/', note: 'Western name adapted to Korean phonetics' },
+                    'Yuki': { name: '유키', phonetic: '/yu-ki/', note: 'Japanese name adopted in Korean' },
+                    'Ahmed': { name: '아메드', phonetic: '/a-me-deu/', note: 'Arabic name adapted to Korean sounds' }
+                }
+            },
+            'Hindi': {
+                script: 'Devanagari',
+                flag: '🇮🇳',
+                difficulty: 'hard',
+                continent: 'Asia',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: 'मारिया', phonetic: '/mā-ri-yā/', note: 'Christian name in Hindi-speaking regions' },
+                    'David': { name: 'दाऊद', phonetic: '/dā-ūd/', note: 'Islamic/Biblical form, common in North India' },
+                    'Alexander': { name: 'सिकंदर', phonetic: '/si-kan-dar/', note: 'Historical form, referring to Alexander the Great' },
+                    'Yuki': { name: 'युकी', phonetic: '/yu-kī/', note: 'Phonetic adaptation of Japanese name' },
+                    'Ahmed': { name: 'अहमद', phonetic: '/ah-mad/', note: 'Common Muslim name in Hindi script' }
+                }
+            },
+            'Thai': {
+                script: 'Thai',
+                flag: '🇹🇭',
+                difficulty: 'hard',
+                continent: 'Asia',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: 'มาเรีย', phonetic: '/mā-rīa/', note: 'Christian name adapted to Thai script' },
+                    'David': { name: 'เดวิด', phonetic: '/dē-wít/', note: 'Western name with Thai pronunciation' },
+                    'Alexander': { name: 'อเล็กซานเดอร์', phonetic: '/a-lék-sān-də/', note: 'Complex foreign name in Thai script' },
+                    'Yuki': { name: 'ยูกิ', phonetic: '/yū-gì/', note: 'Japanese name popular in Thai culture' },
+                    'Ahmed': { name: 'อาห์เมด', phonetic: '/āh-mēt/', note: 'Arabic name in southern Thai Muslim communities' }
+                }
+            },
+
+            // Middle Eastern Languages
+            'Arabic': {
+                script: 'Arabic',
+                flag: '🇸🇦',
+                difficulty: 'hard',
+                continent: 'Asia',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: 'مريم', phonetic: '/mar-yam/', note: 'Maryam, Arabic form of Mary, Quranic name' },
+                    'David': { name: 'داود', phonetic: '/dā-wūd/', note: 'Prophet Dawud in Islamic tradition' },
+                    'Alexander': { name: 'إسكندر', phonetic: '/is-kan-dar/', note: 'Historical name, Alexander the Great in Arabic' },
+                    'Yuki': { name: 'يوكي', phonetic: '/yū-kī/', note: 'Phonetic transcription of Japanese name' },
+                    'Ahmed': { name: 'أحمد', phonetic: '/ah-mad/', note: 'One of the most popular Arabic names' }
+                }
+            },
+            'Hebrew': {
+                script: 'Hebrew',
+                flag: '🇮🇱',
+                difficulty: 'hard',
+                continent: 'Asia',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: 'מרים', phonetic: '/mir-yam/', note: 'Miriam, traditional Hebrew form' },
+                    'David': { name: 'דוד', phonetic: '/da-vid/', note: 'King David, classic Hebrew name' },
+                    'Alexander': { name: 'אלכסנדר', phonetic: '/a-lek-san-der/', note: 'Hellenistic period name in Hebrew' },
+                    'Yuki': { name: 'יוקי', phonetic: '/yu-ki/', note: 'Modern adaptation of Japanese name' },
+                    'Ahmed': { name: 'אחמד', phonetic: '/ah-med/', note: 'Arabic name in Hebrew script' }
+                }
+            },
+            'Persian (Farsi)': {
+                script: 'Persian',
+                flag: '🇮🇷',
+                difficulty: 'hard',
+                continent: 'Asia',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: 'مریم', phonetic: '/mar-yam/', note: 'Persian form of Mary, popular in Iran' },
+                    'David': { name: 'داوود', phonetic: '/dā-vūd/', note: 'Persian pronunciation of biblical David' },
+                    'Alexander': { name: 'اسکندر', phonetic: '/es-kan-dar/', note: 'Alexander the Great, known in Persian history' },
+                    'Yuki': { name: 'یوکی', phonetic: '/yu-ki/', note: 'Foreign name adapted to Persian script' },
+                    'Ahmed': { name: 'احمد', phonetic: '/ah-mad/', note: 'Common Persian/Arabic name' }
+                }
+            },
+
+            // African Languages
+            'Swahili': {
+                script: 'Latin',
+                flag: '🇰🇪',
+                difficulty: 'easy',
+                continent: 'Africa',
+                category: 'common',
+                transforms: {
+                    'Maria': { name: 'Maria', phonetic: '/ma-REE-ah/', note: 'Christian name widely used in East Africa' },
+                    'David': { name: 'Daudi', phonetic: '/da-OO-dee/', note: 'Swahili form of David, biblical origin' },
+                    'Alexander': { name: 'Aleksanda', phonetic: '/ah-le-KSAN-da/', note: 'Adapted to Swahili phonetic patterns' },
+                    'Yuki': { name: 'Yuki', phonetic: '/YOO-kee/', note: 'International name, uncommon but recognized' },
+                    'Ahmed': { name: 'Ahmed', phonetic: '/AH-med/', note: 'Very common Islamic name in East Africa' }
+                }
+            },
+            'Amharic': {
+                script: 'Ge\'ez',
+                flag: '🇪🇹',
+                difficulty: 'hard',
+                continent: 'Africa',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: 'ማርያም', phonetic: '/mar-yam/', note: 'Ethiopian Orthodox Christian name' },
+                    'David': { name: 'ዳዊት', phonetic: '/da-wit/', note: 'Biblical name in Ethiopian tradition' },
+                    'Alexander': { name: 'እስክንድር', phonetic: '/əs-kən-dər/', note: 'Historical name in Ethiopian script' },
+                    'Yuki': { name: 'ዩኪ', phonetic: '/yu-ki/', note: 'Foreign name phonetically adapted' },
+                    'Ahmed': { name: 'አህመድ', phonetic: '/ah-məd/', note: 'Islamic name in Amharic script' }
+                }
+            },
+
+            // Additional European Languages
+            'Dutch': {
+                script: 'Latin',
+                flag: '🇳🇱',
+                difficulty: 'medium',
+                continent: 'Europe',
+                category: 'common',
+                transforms: {
+                    'Maria': { name: 'Maria', phonetic: '/ma-REE-ah/', note: 'Traditional Dutch name, often combined' },
+                    'David': { name: 'David', phonetic: '/DAH-vit/', note: 'Dutch pronunciation with hard consonants' },
+                    'Alexander': { name: 'Alexander', phonetic: '/ah-lek-SAHN-der/', note: 'Classical Dutch form' },
+                    'Yuki': { name: 'Yuki', phonetic: '/YU-ki/', note: 'International name in Netherlands' },
+                    'Ahmed': { name: 'Ahmed', phonetic: '/AH-met/', note: 'Common in Dutch-Moroccan communities' }
+                }
+            },
+            'Swedish': {
+                script: 'Latin',
+                flag: '🇸🇪',
+                difficulty: 'medium',
+                continent: 'Europe',
+                category: 'common',
+                transforms: {
+                    'Maria': { name: 'Maria', phonetic: '/ma-REE-ah/', note: 'Classic Scandinavian name' },
+                    'David': { name: 'David', phonetic: '/DAH-vid/', note: 'Swedish pronunciation pattern' },
+                    'Alexander': { name: 'Alexander', phonetic: '/ah-lek-SAHN-der/', note: 'Royal name in Swedish history' },
+                    'Yuki': { name: 'Yuki', phonetic: '/YU-ki/', note: 'Modern international name' },
+                    'Ahmed': { name: 'Ahmed', phonetic: '/AH-med/', note: 'Common in Swedish immigrant communities' }
+                }
+            },
+            'Polish': {
+                script: 'Latin',
+                flag: '🇵🇱',
+                difficulty: 'medium',
+                continent: 'Europe',
+                category: 'common',
+                transforms: {
+                    'Maria': { name: 'Maria', phonetic: '/MAR-ya/', note: 'Patron saint of Poland, extremely popular' },
+                    'David': { name: 'Dawid', phonetic: '/DAH-veet/', note: 'Polish spelling variation' },
+                    'Alexander': { name: 'Aleksander', phonetic: '/ah-lek-SAHN-der/', note: 'Polish form without "x"' },
+                    'Yuki': { name: 'Yuki', phonetic: '/YU-ki/', note: 'Foreign name, uncommon in Poland' },
+                    'Ahmed': { name: 'Ahmed', phonetic: '/AH-med/', note: 'Islamic name in Polish communities' }
+                }
+            },
+
+            // Americas
+            'Portuguese (Brazilian)': {
+                script: 'Latin',
+                flag: '🇧🇷',
+                difficulty: 'medium',
+                continent: 'South America',
+                category: 'common',
+                transforms: {
+                    'Maria': { name: 'Maria', phonetic: '/ma-HEE-ah/', note: 'Most popular female name in Brazil' },
+                    'David': { name: 'David', phonetic: '/da-VEE-jee/', note: 'Brazilian Portuguese soft "d" ending' },
+                    'Alexander': { name: 'Alexandre', phonetic: '/ah-le-SHAN-dre/', note: 'Popular Brazilian variant' },
+                    'Yuki': { name: 'Yuki', phonetic: '/YU-ki/', note: 'Common in Brazilian Japanese community' },
+                    'Ahmed': { name: 'Ahmed', phonetic: '/ah-MED/', note: 'Less common but present in Muslim communities' }
+                }
+            },
+
+            // Additional Asian Languages
+            'Vietnamese': {
+                script: 'Latin (Vietnamese)',
+                flag: '🇻🇳',
+                difficulty: 'medium',
+                continent: 'Asia',
+                category: 'common',
+                transforms: {
+                    'Maria': { name: 'Maria', phonetic: '/ma-ri-a/', note: 'Catholic Vietnamese name' },
+                    'David': { name: 'David', phonetic: '/đa-vít/', note: 'Adapted to Vietnamese tones' },
+                    'Alexander': { name: 'Alexander', phonetic: '/a-lịch-san-đơ/', note: 'Western name in Vietnamese phonetics' },
+                    'Yuki': { name: 'Yuki', phonetic: '/yu-ki/', note: 'Japanese name popular in Vietnam' },
+                    'Ahmed': { name: 'Ahmed', phonetic: '/a-met/', note: 'Muslim name in Vietnamese script' }
+                }
+            },
+            'Indonesian': {
+                script: 'Latin',
+                flag: '🇮🇩',
+                difficulty: 'easy',
+                continent: 'Asia',
+                category: 'common',
+                transforms: {
+                    'Maria': { name: 'Maria', phonetic: '/ma-ri-a/', note: 'Christian name in Indonesia' },
+                    'David': { name: 'David', phonetic: '/da-vit/', note: 'Biblical name adapted to Indonesian' },
+                    'Alexander': { name: 'Alexander', phonetic: '/a-lek-san-der/', note: 'Western name in Indonesian pronunciation' },
+                    'Yuki': { name: 'Yuki', phonetic: '/yu-ki/', note: 'Japanese name, popular in Indonesia' },
+                    'Ahmed': { name: 'Ahmad', phonetic: '/ah-mad/', note: 'Very common Islamic name, slight spelling variation' }
+                }
+            },
+
+            // Additional Scripts
+            'Bengali': {
+                script: 'Bengali',
+                flag: '🇧🇩',
+                difficulty: 'hard',
+                continent: 'Asia',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: 'মারিয়া', phonetic: '/ma-ri-ya/', note: 'Christian name in Bengali script' },
+                    'David': { name: 'দাউদ', phonetic: '/da-ud/', note: 'Islamic/Biblical form in Bengali' },
+                    'Alexander': { name: 'আলেকজান্ডার', phonetic: '/a-lek-jan-dar/', note: 'Historical name in Bengali script' },
+                    'Yuki': { name: 'ইউকি', phonetic: '/yu-ki/', note: 'Japanese name adapted to Bengali script' },
+                    'Ahmed': { name: 'আহমেদ', phonetic: '/ah-med/', note: 'Popular Muslim name in Bengali' }
+                }
+            },
+            'Tamil': {
+                script: 'Tamil',
+                flag: '🇱🇰',
+                difficulty: 'hard',
+                continent: 'Asia',
+                category: 'scripts',
+                transforms: {
+                    'Maria': { name: 'மரியா', phonetic: '/ma-ri-yā/', note: 'Christian name in Tamil culture' },
+                    'David': { name: 'தாவீது', phonetic: '/tā-vī-tu/', note: 'Biblical David in Tamil script' },
+                    'Alexander': { name: 'அலெக்சாந்தர்', phonetic: '/a-lek-sān-tar/', note: 'Historical name in Tamil adaptation' },
+                    'Yuki': { name: 'யூகி', phonetic: '/yū-ki/', note: 'Japanese name in Tamil phonetics' },
+                    'Ahmed': { name: 'அகமது', phonetic: '/a-ka-ma-tu/', note: 'Islamic name adapted to Tamil script' }
+                }
+            }
+        };
+
+        let currentResults = [];
+        let currentFilter = 'all';
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            document.getElementById('nameInput').focus();
+        });
+
+        function setupEventListeners() {
+            // Enter key functionality
+            document.getElementById('nameInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    translateName();
+                }
+            });
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    if (currentResults.length > 0) {
+                        displayResults(currentResults);
+                    }
+                });
+            });
+        }
+
+        function setName(name) {
+            document.getElementById('nameInput').value = name;
+            translateName();
+        }
+
+        function translateName() {
+            const nameInput = document.getElementById('nameInput').value.trim();
+            
+            if (!nameInput) {
+                showToast('Please enter a name first!', 'error');
+                return;
+            }
+
+            showLoading();
+            
+            // Simulate processing time for better UX
+            setTimeout(() => {
+                const results = processName(nameInput);
+                currentResults = results;
+                displayResults(results);
+                updateStats(results);
+            }, 1500);
+        }
+
+        function processName(inputName) {
+            const results = [];
+            const normalizedName = inputName.charAt(0).toUpperCase() + inputName.slice(1).toLowerCase();
+            
+            for (const [language, data] of Object.entries(languageDatabase)) {
+                const transform = data.transforms[normalizedName];
+                
+                if (transform) {
+                    results.push({
+                        language: language,
+                        script: data.script,
+                        flag: data.flag,
+                        difficulty: data.difficulty,
+                        continent: data.continent,
+                        category: data.category,
+                        name: transform.name,
+                        phonetic: transform.phonetic,
+                        note: transform.note,
+                        originalName: normalizedName
+                    });
+                } else {
+                    // Fallback for names not in database
+                    results.push({
+                        language: language,
+                        script: data.script,
+                        flag: data.flag,
+                        difficulty: data.difficulty,
+                        continent: data.continent,
+                        category: data.category,
+                        name: normalizedName,
+                        phonetic: `/${normalizedName.toLowerCase()}/`,
+                        note: `${normalizedName} adapted to ${language} pronunciation`,
+                        originalName: normalizedName
+                    });
+                }
+            }
+            
+            return results.sort((a, b) => a.language.localeCompare(b.language));
+        }
+
+        function displayResults(results) {
+            const filteredResults = filterResults(results);
+            const resultsContainer = document.getElementById('results');
+            
+            if (filteredResults.length === 0) {
+                resultsContainer.innerHTML = '<div class="loading">No results found for the selected filter.</div>';
+                return;
+            }
+
+            const cardsHTML = filteredResults.map((result, index) => `
+                <div class="language-card" style="animation-delay: ${index * 0.1}s">
+                    <button class="copy-btn" onclick="copyToClipboard('${result.name}')">Copy</button>
+                    <div class="language-header">
+                        <div>
+                            <div class="language-name">${result.language}</div>
+                            <div class="language-script">${result.script} Script</div>
+                        </div>
+                        <div class="flag">${result.flag}</div>
+                    </div>
+                    <div class="translated-name">${result.name}</div>
+                    <div class="phonetic">🔊 ${result.phonetic}</div>
+                    <div class="difficulty-indicator difficulty-${result.difficulty}">
+                        ${result.difficulty} pronunciation
+                    </div>
+                    <div class="cultural-note">${result.note}</div>
+                </div>
+            `).join('');
+
+            resultsContainer.innerHTML = `<div class="results-grid">${cardsHTML}</div>`;
+        }
+
+        function filterResults(results) {
+            switch (currentFilter) {
+                case 'common':
+                    return results.filter(r => r.category === 'common');
+                case 'scripts':
+                    return results.filter(r => r.category === 'scripts');
+                default:
+                    return results;
+            }
+        }
+
+        function updateStats(results) {
+            const stats = document.getElementById('stats');
+            const uniqueScripts = new Set(results.map(r => r.script));
+            const uniqueContinents = new Set(results.map(r => r.continent));
+            
+            document.getElementById('totalLanguages').textContent = results.length;
+            document.getElementById('uniqueScripts').textContent = uniqueScripts.size;
+            document.getElementById('continents').textContent = uniqueContinents.size;
+            
+            stats.style.display = 'flex';
+        }
+
+        function showLoading() {
+            document.getElementById('results').innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div>Translating your name across cultures...</div>
+                </div>
+            `;
+            document.getElementById('stats').style.display = 'none';
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Copied to clipboard!');
+            }).catch(() => {
+                showToast('Copy failed', 'error');
+            });
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.background = type === 'error' ? '#dc3545' : '#28a745';
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
