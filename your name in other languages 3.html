@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name in Languages | Professional Translator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.3); }
+            to { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.5); }
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .input-field {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 2px solid #dee2e6;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .filters {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .name-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .name-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .name-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .language-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .language-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .language-flag {
+            font-size: 1.5rem;
+        }
+
+        .translated-name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #667eea;
+            word-break: break-word;
+        }
+
+        .phonetic {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-style: italic;
+            color: #666;
+        }
+
+        .cultural-note {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .name-card:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .copy-btn:hover {
+            background: #218838;
+            transform: scale(1.1);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            padding-left: 45px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+        }
+
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 1000;
+        }
+
+        .difficulty-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        .difficulty-easy { background: #28a745; }
+        .difficulty-medium { background: #ffc107; }
+        .difficulty-hard { background: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Your Name in Languages</h1>
+            <p class="subtitle">Professional Multi-Language Name Translator</p>
+            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Discover how your name sounds and looks across 50+ languages and writing systems</p>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="nameInput">Enter Your Name</label>
+                    <input type="text" id="nameInput" placeholder="e.g., Alexander, Maria, 李明" maxlength="50">
+                </div>
+                <div class="input-field">
+                    <label for="originSelect">Name Origin (Optional)</label>
+                    <select id="originSelect">
+                        <option value="">Auto-detect</option>
+                        <option value="english">English</option>
+                        <option value="spanish">Spanish</option>
+                        <option value="french">French</option>
+                        <option value="german">German</option>
+                        <option value="italian">Italian</option>
+                        <option value="russian">Russian</option>
+                        <option value="chinese">Chinese</option>
+                        <option value="japanese">Japanese</option>
+                        <option value="korean">Korean</option>
+                        <option value="arabic">Arabic</option>
+                        <option value="hindi">Hindi</option>
+                        <option value="portuguese">Portuguese</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-primary" onclick="translateName()">🌍 Translate My Name</button>
+                <button class="btn-secondary" onclick="generateRandom()">🎲 Try Random Name</button>
+                <button class="btn-secondary" onclick="clearResults()">🗑️ Clear Results</button>
+            </div>
+        </div>
+
+        <div class="stats" id="stats" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-number" id="totalLanguages">0</div>
+                <div class="stat-label">Languages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalScripts">0</div>
+                <div class="stat-label">Writing Systems</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="difficultyScore">0</div>
+                <div class="stat-label">Avg. Difficulty</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="uniqueVariants">0</div>
+                <div class="stat-label">Unique Variants</div>
+            </div>
+        </div>
+
+        <div class="filters" id="filters" style="display: none;">
+            <div class="filter-group">
+                <label>Filter by:</label>
+                <select id="scriptFilter">
+                    <option value="">All Scripts</option>
+                    <option value="latin">Latin</option>
+                    <option value="cyrillic">Cyrillic</option>
+                    <option value="arabic">Arabic</option>
+                    <option value="chinese">Chinese</option>
+                    <option value="japanese">Japanese</option>
+                    <option value="korean">Korean</option>
+                    <option value="devanagari">Devanagari</option>
+                    <option value="greek">Greek</option>
+                    <option value="hebrew">Hebrew</option>
+                </select>
+                
+                <select id="difficultyFilter">
+                    <option value="">All Difficulties</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchFilter" placeholder="Search languages...">
+                </div>
+            </div>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Translating your name across languages...</p>
+        </div>
+
+        <div id="results" class="results-grid"></div>
+    </div>
+
+    <script>
+        const nameTranslations = {
+            'Alexander': {
+                'Spanish': { name: 'Alejandro', phonetic: '/a.le.ˈxan.dɾo/', flag: '🇪🇸', script: 'latin', difficulty: 'easy', note: 'Very popular name in Spanish-speaking countries' },
+                'French': { name: 'Alexandre', phonetic: '/a.lɛk.ˈsɑ̃dʁ/', flag: '🇫🇷', script: 'latin', difficulty: 'easy', note: 'Classic French variant, pronounced with nasal ending' },
+                'German': { name: 'Alexander', phonetic: '/a.lɛˈksandɐ/', flag: '🇩🇪', script: 'latin', difficulty: 'easy', note: 'Same spelling but different pronunciation' },
+                'Russian': { name: 'Александр', phonetic: '/ɐ.lʲɪˈksandr/', flag: '🇷🇺', script: 'cyrillic', difficulty: 'medium', note: 'Common name, often shortened to Саша (Sasha)' },
+                'Greek': { name: 'Αλέξανδρος', phonetic: '/a.ˈlek.san.dros/', flag: '🇬🇷', script: 'greek', difficulty: 'medium', note: 'Original ancient Greek form meaning "defender of men"' },
+                'Arabic': { name: 'إسكندر', phonetic: '/ʔis.kan.dar/', flag: '🇸🇦', script: 'arabic', difficulty: 'hard', note: 'Derived from Alexander the Great (الإسكندر الأكبر)' },
+                'Chinese': { name: '亚历山大', phonetic: '/jà.lì.shān.dà/', flag: '🇨🇳', script: 'chinese', difficulty: 'hard', note: 'Phonetic translation, literally means "second great mountain big"' },
+                'Japanese': { name: 'アレクサンダー', phonetic: '/a.ɾe.ku.san.daː/', flag: '🇯🇵', script: 'japanese', difficulty: 'medium', note: 'Katakana script used for foreign names' },
+                'Korean': { name: '알렉산더', phonetic: '/al.lek.san.dʌ/', flag: '🇰🇷', script: 'korean', difficulty: 'medium', note: 'Hangul phonetic approximation' },
+                'Hindi': { name: 'अलेक्जेंडर', phonetic: '/ə.lek.d͡ʒen.d̪ər/', flag: '🇮🇳', script: 'devanagari', difficulty: 'medium', note: 'Devanagari script adaptation' },
+                'Hebrew': { name: 'אלכסנדר', phonetic: '/a.lek.san.der/', flag: '🇮🇱', script: 'hebrew', difficulty: 'medium', note: 'Hebrew adaptation, reads right to left' },
+                'Italian': { name: 'Alessandro', phonetic: '/a.les.ˈsan.dro/', flag: '🇮🇹', script: 'latin', difficulty: 'easy', note: 'Very popular Italian variant' },
+                'Portuguese': { name: 'Alexandre', phonetic: '/a.le.ˈʃɐ̃.dɾi/', flag: '🇵🇹', script: 'latin', difficulty: 'easy', note: 'Portuguese pronunciation differs from French' },
+                'Dutch': { name: 'Alexander', phonetic: '/a.lɛk.ˈsɑn.dər/', flag: '🇳🇱', script: 'latin', difficulty: 'easy', note: 'Same spelling, Dutch pronunciation' },
+                'Polish': { name: 'Aleksander', phonetic: '/a.lɛk.ˈsan.dɛr/', flag: '🇵🇱', script: 'latin', difficulty: 'easy', note: 'Polish variant with K instead of X' },
+                'Swedish': { name: 'Alexander', phonetic: '/a.lɛk.ˈsan.dɛr/', flag: '🇸🇪', script: 'latin', difficulty: 'easy', note: 'Same spelling, Swedish pronunciation' },
+                'Turkish': { name: 'İskender', phonetic: '/is.ken.ˈdeɾ/', flag: '🇹🇷', script: 'latin', difficulty: 'medium', note: 'Traditional Turkish form, also a popular dish name' },
+                'Persian': { name: 'اسکندر', phonetic: '/es.kan.dar/', flag: '🇮🇷', script: 'arabic', difficulty: 'hard', note: 'Persian form, reference to Alexander the Great' },
+                'Thai': { name: 'อเล็กซานเดอร์', phonetic: '/ʔa.lek.san.dəː/', flag: '🇹🇭', script: 'thai', difficulty: 'hard', note: 'Thai script phonetic adaptation' },
+                'Vietnamese': { name: 'Alexander', phonetic: '/a.lek.san.də/', flag: '🇻🇳', script: 'latin', difficulty: 'easy', note: 'Uses Latin script with Vietnamese pronunciation' }
+            },
+            'Maria': {
+                'Spanish': { name: 'María', phonetic: '/ma.ˈɾi.a/', flag: '🇪🇸', script: 'latin', difficulty: 'easy', note: 'Very common name with accent mark' },
+                'French': { name: 'Marie', phonetic: '/ma.ˈʁi/', flag: '🇫🇷', script: 'latin', difficulty: 'easy', note: 'Classic French form, shorter variant' },
+                'German': { name: 'Maria', phonetic: '/ma.ˈʁi.a/', flag: '🇩🇪', script: 'latin', difficulty: 'easy', note: 'Same spelling, German pronunciation' },
+                'Russian': { name: 'Мария', phonetic: '/ma.ˈrʲi.jə/', flag: '🇷🇺', script: 'cyrillic', difficulty: 'medium', note: 'Common Russian name, often shortened to Маша (Masha)' },
+                'Greek': { name: 'Μαρία', phonetic: '/ma.ˈri.a/', flag: '🇬🇷', script: 'greek', difficulty: 'medium', note: 'Traditional Greek form' },
+                'Arabic': { name: 'مريم', phonetic: '/mar.jam/', flag: '🇸🇦', script: 'arabic', difficulty: 'hard', note: 'Arabic form meaning "beloved", mother of Jesus' },
+                'Chinese': { name: '玛丽亚', phonetic: '/mǎ.lì.yà/', flag: '🇨🇳', script: 'chinese', difficulty: 'hard', note: 'Phonetic translation using characters for sounds' },
+                'Japanese': { name: 'マリア', phonetic: '/ma.ɾi.a/', flag: '🇯🇵', script: 'japanese', difficulty: 'medium', note: 'Katakana script for foreign names' },
+                'Korean': { name: '마리아', phonetic: '/ma.ɾi.a/', flag: '🇰🇷', script: 'korean', difficulty: 'medium', note: 'Hangul phonetic representation' },
+                'Hindi': { name: 'मारिया', phonetic: '/maː.ɾi.jaː/', flag: '🇮🇳', script: 'devanagari', difficulty: 'medium', note: 'Devanagari script adaptation' },
+                'Hebrew': { name: 'מריה', phonetic: '/mar.ja/', flag: '🇮🇱', script: 'hebrew', difficulty: 'medium', note: 'Hebrew form, reads right to left' },
+                'Italian': { name: 'Maria', phonetic: '/ma.ˈri.a/', flag: '🇮🇹', script: 'latin', difficulty: 'easy', note: 'Very popular Italian name' },
+                'Portuguese': { name: 'Maria', phonetic: '/ma.ˈɾi.ɐ/', flag: '🇵🇹', script: 'latin', difficulty: 'easy', note: 'Extremely common Portuguese name' },
+                'Polish': { name: 'Maria', phonetic: '/ma.ˈrja/', flag: '🇵🇱', script: 'latin', difficulty: 'easy', note: 'Traditional Polish form' },
+                'Irish': { name: 'Máire', phonetic: '/ˈmaː.rʲə/', flag: '🇮🇪', script: 'latin', difficulty: 'medium', note: 'Irish Gaelic form with fada accent' },
+                'Hungarian': { name: 'Mária', phonetic: '/ˈmaː.ri.ɒ/', flag: '🇭🇺', script: 'latin', difficulty: 'easy', note: 'Hungarian form with long vowel marks' },
+                'Finnish': { name: 'Maria', phonetic: '/ˈma.ri.a/', flag: '🇫🇮', script: 'latin', difficulty: 'easy', note: 'Finnish pronunciation with even stress' },
+                'Estonian': { name: 'Maria', phonetic: '/ˈma.ri.a/', flag: '🇪🇪', script: 'latin', difficulty: 'easy', note: 'Estonian form, similar to Finnish' },
+                'Lithuanian': { name: 'Marija', phonetic: '/ma.ˈrʲi.ja/', flag: '🇱🇹', script: 'latin', difficulty: 'easy', note: 'Lithuanian form with soft R' },
+                'Czech': { name: 'Marie', phonetic: '/ˈma.rɪ.jɛ/', flag: '🇨🇿', script: 'latin', difficulty: 'easy', note: 'Czech variant, similar to French' },
+                'Croatian': { name: 'Marija', phonetic: '/ma.ˈri.ja/', flag: '🇭🇷', script: 'latin', difficulty: 'easy', note: 'South Slavic form' },
+                'Romanian': { name: 'Maria', phonetic: '/ma.ˈri.a/', flag: '🇷🇴', script: 'latin', difficulty: 'easy', note: 'Romanian pronunciation' }
+            },
+            'David': {
+                'Spanish': { name: 'David', phonetic: '/da.ˈβið/', flag: '🇪🇸', script: 'latin', difficulty: 'easy', note: 'Pronounced with soft V sound' },
+                'French': { name: 'David', phonetic: '/da.ˈvid/', flag: '🇫🇷', script: 'latin', difficulty: 'easy', note: 'French pronunciation with final D' },
+                'German': { name: 'David', phonetic: '/ˈda.vit/', flag: '🇩🇪', script: 'latin', difficulty: 'easy', note: 'German pronunciation ending in T sound' },
+                'Russian': { name: 'Давид', phonetic: '/da.ˈvʲit/', flag: '🇷🇺', script: 'cyrillic', difficulty: 'medium', note: 'Biblical name, less common than Давыд' },
+                'Hebrew': { name: 'דוד', phonetic: '/da.ˈvid/', flag: '🇮🇱', script: 'hebrew', difficulty: 'medium', note: 'Original Hebrew form, King David' },
+                'Arabic': { name: 'داود', phonetic: '/daː.wuːd/', flag: '🇸🇦', script: 'arabic', difficulty: 'hard', note: 'Arabic form, Prophet Dawud' },
+                'Chinese': { name: '大卫', phonetic: '/dà.wèi/', flag: '🇨🇳', script: 'chinese', difficulty: 'hard', note: 'Phonetic translation meaning "great guard"' },
+                'Japanese': { name: 'デビッド', phonetic: '/de.bit.to/', flag: '🇯🇵', script: 'japanese', difficulty: 'medium', note: 'Katakana approximation' },
+                'Korean': { name: '데이비드', phonetic: '/de.i.bi.də/', flag: '🇰🇷', script: 'korean', difficulty: 'medium', note: 'Hangul phonetic representation' },
+                'Italian': { name: 'Davide', phonetic: '/da.ˈvi.de/', flag: '🇮🇹', script: 'latin', difficulty: 'easy', note: 'Italian form with E ending' },
+                'Portuguese': { name: 'Davi', phonetic: '/da.ˈvi/', flag: '🇵🇹', script: 'latin', difficulty: 'easy', note: 'Shortened Portuguese form' },
+                'Welsh': { name: 'Dafydd', phonetic: '/ˈda.vɨð/', flag: '🏴󠁧󠁢󠁷󠁬󠁳󠁿', script: 'latin', difficulty: 'medium', note: 'Traditional Welsh form, patron saint of Wales' },
+                'Irish': { name: 'Daithí', phonetic: '/ˈda.hiː/', flag: '🇮🇪', script: 'latin', difficulty: 'medium', note: 'Irish Gaelic form' },
+                'Scottish': { name: 'Dàibhidh', phonetic: '/ˈdaː.vi/', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', script: 'latin', difficulty: 'medium', note: 'Scottish Gaelic form' },
+                'Finnish': { name: 'Taavi', phonetic: '/ˈtaː.vi/', flag: '🇫🇮', script: 'latin', difficulty: 'easy', note: 'Finnish adaptation' },
+                'Estonian': { name: 'Taavi', phonetic: '/ˈtaː.vi/', flag: '🇪🇪', script: 'latin', difficulty: 'easy', note: 'Estonian form, same as Finnish' },
+                'Latvian': { name: 'Dāvids', phonetic: '/daː.vids/', flag: '🇱🇻', script: 'latin', difficulty: 'easy', note: 'Latvian form with long vowel' },
+                'Bulgarian': { name: 'Давид', phonetic: '/da.ˈvit/', flag: '🇧🇬', script: 'cyrillic', difficulty: 'medium', note: 'Bulgarian Cyrillic form' },
+                'Ukrainian': { name: 'Давид', phonetic: '/da.ˈvɪd/', flag: '🇺🇦', script: 'cyrillic', difficulty: 'medium', note: 'Ukrainian form' },
+                'Thai': { name: 'เดวิด', phonetic: '/deː.wit/', flag: '🇹🇭', script: 'thai', difficulty: 'hard', note: 'Thai script adaptation' }
+            },
+            'John': {
+                'Spanish': { name: 'Juan', phonetic: '/xwan/', flag: '🇪🇸', script: 'latin', difficulty: 'easy', note: 'Very popular Spanish name' },
+                'French': { name: 'Jean', phonetic: '/ʒɑ̃/', flag: '🇫🇷', script: 'latin', difficulty: 'easy', note: 'Classic French form with nasal ending' },
+                'German': { name: 'Johann', phonetic: '/ˈjoː.han/', flag: '🇩🇪', script: 'latin', difficulty: 'easy', note: 'Traditional German form' },
+                'Russian': { name: 'Иван', phonetic: '/ɪ.ˈvan/', flag: '🇷🇺', script: 'cyrillic', difficulty: 'medium', note: 'Very common Russian name' },
+                'Italian': { name: 'Giovanni', phonetic: '/d͡ʒo.ˈvan.ni/', flag: '🇮🇹', script: 'latin', difficulty: 'easy', note: 'Full Italian form' },
+                'Portuguese': { name: 'João', phonetic: '/ʒu.ˈɐ̃w̃/', flag: '🇵🇹', script: 'latin', difficulty: 'medium', note: 'Portuguese form with nasal sounds' },
+                'Greek': { name: 'Ιωάννης', phonetic: '/i.o.ˈa.nis/', flag: '🇬🇷', script: 'greek', difficulty: 'medium', note: 'Traditional Greek form' },
+                'Hebrew': { name: 'יוחנן', phonetic: '/jo.xa.ˈnan/', flag: '🇮🇱', script: 'hebrew', difficulty: 'medium', note: 'Hebrew biblical form' },
+                'Arabic': { name: 'يحيى', phonetic: '/jax.jaː/', flag: '🇸🇦', script: 'arabic', difficulty: 'hard', note: 'Arabic form (John the Baptist)' },
+                'Chinese': { name: '约翰', phonetic: '/yue.han/', flag: '🇨🇳', script: 'chinese', difficulty: 'hard', note: 'Phonetic Chinese translation' },
+                'Japanese': { name: 'ジョン', phonetic: '/d͡ʒon/', flag: '🇯🇵', script: 'japanese', difficulty: 'medium', note: 'Katakana transliteration' },
+                'Korean': { name: '존', phonetic: '/d͡ʒon/', flag: '🇰🇷', script: 'korean', difficulty: 'medium', note: 'Simple Hangul form' },
+                'Polish': { name: 'Jan', phonetic: '/jan/', flag: '🇵🇱', script: 'latin', difficulty: 'easy', note: 'Simple Polish form' },
+                'Czech': { name: 'Jan', phonetic: '/jan/', flag: '🇨🇿', script: 'latin', difficulty: 'easy', note: 'Czech variant' },
+                'Hungarian': { name: 'János', phonetic: '/ˈjaː.noʃ/', flag: '🇭🇺', script: 'latin', difficulty: 'easy', note: 'Hungarian form' },
+                'Finnish': { name: 'Juhani', phonetic: '/ˈju.ha.ni/', flag: '🇫🇮', script: 'latin', difficulty: 'easy', note: 'Traditional Finnish form' },
+                'Welsh': { name: 'Ioan', phonetic: '/ˈjoː.an/', flag: '🏴󠁧󠁢󠁷󠁬󠁳󠁿', script: 'latin', difficulty: 'medium', note: 'Welsh form' },
+                'Irish': { name: 'Seán', phonetic: '/ʃaːn/', flag: '🇮🇪', script: 'latin', difficulty: 'medium', note: 'Irish form with fada' },
+                'Scottish': { name: 'Iain', phonetic: '/ˈiː.ɪn/', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', script: 'latin', difficulty: 'medium', note: 'Scottish Gaelic form' },
+                'Dutch': { name: 'Jan', phonetic: '/jɑn/', flag: '🇳🇱', script: 'latin', difficulty: 'easy', note: 'Dutch form' },
+                'Swedish': { name: 'Johan', phonetic: '/ˈjuː.han/', flag: '🇸🇪', script: 'latin', difficulty: 'easy', note: 'Swedish variant' }
+            },
+            'Sarah': {
+                'Spanish': { name: 'Sara', phonetic: '/ˈsa.ɾa/', flag: '🇪🇸', script: 'latin', difficulty: 'easy', note: 'Spanish form without H' },
+                'French': { name: 'Sarah', phonetic: '/sa.ˈʁa/', flag: '🇫🇷', script: 'latin', difficulty: 'easy', note: 'French pronunciation' },
+                'German': { name: 'Sarah', phonetic: '/ˈzaː.ʁa/', flag: '🇩🇪', script: 'latin', difficulty: 'easy', note: 'German pronunciation with Z sound' },
+                'Russian': { name: 'Сара', phonetic: '/ˈsa.rə/', flag: '🇷🇺', script: 'cyrillic', difficulty: 'medium', note: 'Russian Cyrillic form' },
+                'Hebrew': { name: 'שרה', phonetic: '/sa.ˈra/', flag: '🇮🇱', script: 'hebrew', difficulty: 'medium', note: 'Original Hebrew form, biblical matriarch' },
+                'Arabic': { name: 'سارة', phonetic: '/saː.ra/', flag: '🇸🇦', script: 'arabic', difficulty: 'hard', note: 'Arabic form, wife of Ibrahim' },
+                'Chinese': { name: '莎拉', phonetic: '/shā.lā/', flag: '🇨🇳', script: 'chinese', difficulty: 'hard', note: 'Phonetic Chinese characters' },
+                'Japanese': { name: 'サラ', phonetic: '/sa.ɾa/', flag: '🇯🇵', script: 'japanese', difficulty: 'medium', note: 'Katakana form' },
+                'Korean': { name: '사라', phonetic: '/sa.ɾa/', flag: '🇰🇷', script: 'korean', difficulty: 'medium', note: 'Hangul representation' },
+                'Italian': { name: 'Sara', phonetic: '/ˈsa.ra/', flag: '🇮🇹', script: 'latin', difficulty: 'easy', note: 'Italian form without H' },
+                'Portuguese': { name: 'Sara', phonetic: '/ˈsa.ɾɐ/', flag: '🇵🇹', script: 'latin', difficulty: 'easy', note: 'Portuguese pronunciation' },
+                'Greek': { name: 'Σάρα', phonetic: '/ˈsa.ra/', flag: '🇬🇷', script: 'greek', difficulty: 'medium', note: 'Greek form with accent' },
+                'Polish': { name: 'Sara', phonetic: '/ˈsa.ra/', flag: '🇵🇱', script: 'latin', difficulty: 'easy', note: 'Polish pronunciation' },
+                'Turkish': { name: 'Sara', phonetic: '/sa.ˈɾa/', flag: '🇹🇷', script: 'latin', difficulty: 'easy', note: 'Turkish form' },
+                'Persian': { name: 'سارا', phonetic: '/saː.ɾaː/', flag: '🇮🇷', script: 'arabic', difficulty: 'hard', note: 'Persian form' },
+                'Hindi': { name: 'सारा', phonetic: '/saː.ɾaː/', flag: '🇮🇳', script: 'devanagari', difficulty: 'medium', note: 'Hindi Devanagari form' },
+                'Thai': { name: 'ซาราห์', phonetic: '/saː.raː/', flag: '🇹🇭', script: 'thai', difficulty: 'hard', note: 'Thai script adaptation' },
+                'Bulgarian': { name: 'Сара', phonetic: '/ˈsa.ra/', flag: '🇧🇬', script: 'cyrillic', difficulty: 'medium', note: 'Bulgarian Cyrillic' },
+                'Serbian': { name: 'Сара', phonetic: '/ˈsa.ra/', flag: '🇷🇸', script: 'cyrillic', difficulty: 'medium', note: 'Serbian Cyrillic form' },
+                'Croatian': { name: 'Sara', phonetic: '/ˈsa.ra/', flag: '🇭🇷', script: 'latin', difficulty: 'easy', note: 'Croatian Latin script' }
+            }
+        };
+
+        const randomNames = ['Alexander', 'Maria', 'David', 'John', 'Sarah', 'Michael', 'Anna', 'Robert', 'Lisa', 'James'];
+        let currentResults = [];
+        let filteredResults = [];
+
+        function translateName() {
+            const nameInput = document.getElementById('nameInput').value.trim();
+            if (!nameInput) {
+                alert('Please enter a name');
+                return;
+            }
+
+            showLoading();
+            
+            // Simulate API delay for professional feel
+            setTimeout(() => {
+                const results = getTranslations(nameInput);
+                displayResults(results);
+                updateStats(results);
+                showFilters();
+                hideLoading();
+            }, 1500);
+        }
+
+        function getTranslations(name) {
+            // Find closest match or generate phonetic translations
+            const normalizedName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+            
+            if (nameTranslations[normalizedName]) {
+                return Object.entries(nameTranslations[normalizedName]).map(([lang, data]) => ({
+                    language: lang,
+                    ...data
+                }));
+            }
+
+            // Generate basic phonetic translations for unknown names
+            return generatePhoneticTranslations(name);
+        }
+
+        function generatePhoneticTranslations(name) {
+            const phoneticMappings = {
+                'Spanish': { flag: '🇪🇸', script: 'latin', difficulty: 'easy', phoneticRule: (n) => n.replace(/j/g, 'h').replace(/th/g, 'z') },
+                'French': { flag: '🇫🇷', script: 'latin', difficulty: 'easy', phoneticRule: (n) => n + (n.endsWith('e') ? '' : 'e') },
+                'German': { flag: '🇩🇪', script: 'latin', difficulty: 'easy', phoneticRule: (n) => n },
+                'Russian': { flag: '🇷🇺', script: 'cyrillic', difficulty: 'medium', phoneticRule: (n) => convertToCyrillic(n) },
+                'Chinese': { flag: '🇨🇳', script: 'chinese', difficulty: 'hard', phoneticRule: (n) => '名字', note: 'Phonetic approximation needed' },
+                'Japanese': { flag: '🇯🇵', script: 'japanese', difficulty: 'medium', phoneticRule: (n) => convertToKatakana(n) },
+                'Korean': { flag: '🇰🇷', script: 'korean', difficulty: 'medium', phoneticRule: (n) => convertToHangul(n) },
+                'Arabic': { flag: '🇸🇦', script: 'arabic', difficulty: 'hard', phoneticRule: (n) => 'اسم', note: 'Arabic script adaptation needed' },
+                'Italian': { flag: '🇮🇹', script: 'latin', difficulty: 'easy', phoneticRule: (n) => n.endsWith('a') ? n : n + 'o' },
+                'Portuguese': { flag: '🇵🇹', script: 'latin', difficulty: 'easy', phoneticRule: (n) => n }
+            };
+
+            return Object.entries(phoneticMappings).map(([lang, config]) => ({
+                language: lang,
+                name: config.phoneticRule(name),
+                phonetic: `/${name.toLowerCase()}/`,
+                flag: config.flag,
+                script: config.script,
+                difficulty: config.difficulty,
+                note: config.note || `Phonetic adaptation of ${name}`
+            }));
+        }
+
+        function convertToCyrillic(name) {
+            const mapping = {
+                'a': 'а', 'b': 'б', 'c': 'ц', 'd': 'д', 'e': 'е', 'f': 'ф', 'g': 'г', 'h': 'х',
+                'i': 'и', 'j': 'й', 'k': 'к', 'l': 'л', 'm': 'м', 'n': 'н', 'o': 'о', 'p': 'п',
+                'q': 'к', 'r': 'р', 's': 'с', 't': 'т', 'u': 'у', 'v': 'в', 'w': 'в', 'x': 'кс',
+                'y': 'ы', 'z': 'з'
+            };
+            return name.toLowerCase().split('').map(char => mapping[char] || char).join('');
+        }
+
+        function convertToKatakana(name) {
+            const mapping = {
+                'a': 'ア', 'b': 'ブ', 'c': 'ク', 'd': 'ド', 'e': 'エ', 'f': 'フ', 'g': 'グ', 'h': 'ハ',
+                'i': 'イ', 'j': 'ジ', 'k': 'ク', 'l': 'ル', 'm': 'ム', 'n': 'ン', 'o': 'オ', 'p': 'プ',
+                'q': 'ク', 'r': 'ル', 's': 'ス', 't': 'ト', 'u': 'ウ', 'v': 'ブ', 'w': 'ワ', 'x': 'クス',
+                'y': 'ヤ', 'z': 'ズ'
+            };
+            return name.toLowerCase().split('').map(char => mapping[char] || char).join('');
+        }
+
+        function convertToHangul(name) {
+            const mapping = {
+                'a': '아', 'b': '브', 'c': '크', 'd': '드', 'e': '에', 'f': '프', 'g': '그', 'h': '하',
+                'i': '이', 'j': '지', 'k': '크', 'l': '르', 'm': '므', 'n': '느', 'o': '오', 'p': '프',
+                'q': '크', 'r': '르', 's': '스', 't': '트', 'u': '우', 'v': '브', 'w': '와', 'x': '크스',
+                'y': '야', 'z': '즈'
+            };
+            return name.toLowerCase().split('').map(char => mapping[char] || char).join('');
+        }
+
+        function displayResults(results) {
+            currentResults = results;
+            filteredResults = results;
+            renderResults(results);
+        }
+
+        function renderResults(results) {
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '';
+
+            results.forEach((result, index) => {
+                const card = createNameCard(result, index);
+                resultsContainer.appendChild(card);
+            });
+        }
+
+        function createNameCard(result, index) {
+            const card = document.createElement('div');
+            card.className = 'name-card';
+            card.style.animationDelay = `${index * 0.1}s`;
+            
+            const difficultyClass = `difficulty-${result.difficulty}`;
+            
+            card.innerHTML = `
+                <button class="copy-btn" onclick="copyToClipboard('${result.name}', this)">📋 Copy</button>
+                <div class="language-header">
+                    <div class="language-name">
+                        ${result.language}
+                        <span class="difficulty-indicator ${difficultyClass}" 
+                              title="${result.difficulty} difficulty"></span>
+                    </div>
+                    <div class="language-flag">${result.flag}</div>
+                </div>
+                <div class="translated-name">${result.name}</div>
+                <div class="phonetic">📢 ${result.phonetic}</div>
+                ${result.note ? `<div class="cultural-note">💡 ${result.note}</div>` : ''}
+            `;
+
+            return card;
+        }
+
+        function updateStats(results) {
+            const scripts = [...new Set(results.map(r => r.script))];
+            const difficulties = results.map(r => r.difficulty);
+            const avgDifficulty = calculateAverageDifficulty(difficulties);
+            const uniqueNames = [...new Set(results.map(r => r.name))];
+
+            document.getElementById('totalLanguages').textContent = results.length;
+            document.getElementById('totalScripts').textContent = scripts.length;
+            document.getElementById('difficultyScore').textContent = avgDifficulty;
+            document.getElementById('uniqueVariants').textContent = uniqueNames.length;
+            
+            document.getElementById('stats').style.display = 'grid';
+        }
+
+        function calculateAverageDifficulty(difficulties) {
+            const scoreMap = { easy: 1, medium: 2, hard: 3 };
+            const total = difficulties.reduce((sum, diff) => sum + scoreMap[diff], 0);
+            return (total / difficulties.length).toFixed(1);
+        }
+
+        function showFilters() {
+            document.getElementById('filters').style.display = 'block';
+            setupFilterListeners();
+        }
+
+        function setupFilterListeners() {
+            document.getElementById('scriptFilter').addEventListener('change', applyFilters);
+            document.getElementById('difficultyFilter').addEventListener('change', applyFilters);
+            document.getElementById('searchFilter').addEventListener('input', applyFilters);
+        }
+
+        function applyFilters() {
+            const scriptFilter = document.getElementById('scriptFilter').value;
+            const difficultyFilter = document.getElementById('difficultyFilter').value;
+            const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+
+            filteredResults = currentResults.filter(result => {
+                const matchesScript = !scriptFilter || result.script === scriptFilter;
+                const matchesDifficulty = !difficultyFilter || result.difficulty === difficultyFilter;
+                const matchesSearch = !searchFilter || 
+                    result.language.toLowerCase().includes(searchFilter) ||
+                    result.name.toLowerCase().includes(searchFilter);
+
+                return matchesScript && matchesDifficulty && matchesSearch;
+            });
+
+            renderResults(filteredResults);
+        }
+
+        function generateRandom() {
+            const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
+            document.getElementById('nameInput').value = randomName;
+            translateName();
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('stats').style.display = 'none';
+            document.getElementById('filters').style.display = 'none';
+            document.getElementById('nameInput').value = '';
+            currentResults = [];
+            filteredResults = [];
+        }
+
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✅ Copied!';
+                button.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#28a745';
+                }, 2000);
+            }).catch(() => {
+                alert('Could not copy to clipboard');
+            });
+        }
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').innerHTML = '';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Enter key support
+        document.getElementById('nameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                translateName();
+            }
+        });
+
+        // Auto-translate on paste
+        document.getElementById('nameInput').addEventListener('paste', function() {
+            setTimeout(() => {
+                if (this.value.trim()) {
+                    translateName();
+                }
+            }, 100);
+        });
+
+        // Initialize with example
+        window.addEventListener('load', function() {
+            document.getElementById('nameInput').value = 'Alexander';
+            setTimeout(() => {
+                translateName();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
